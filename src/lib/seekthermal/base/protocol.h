@@ -30,6 +30,7 @@
 
 namespace SeekThermal {
   class Request;
+  class Device;
 
   class Protocol :
     public Object {

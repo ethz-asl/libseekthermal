@@ -197,7 +197,6 @@ void SeekThermal::Usb::Request::transfer(libusb_device_handle* handle,
 
   if (requestLength)
     requestData = &data[0];
-
   Error::assert(libusb_control_transfer(handle, requestType, request,
     value, index, requestData, requestLength, timeout*1e3));
 }

@@ -18,14 +18,42 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <seekthermal/models/aaa/device.h>
+
 #include "protocol.h"
+
+#include "initialize.h"
+#include "deinitialize.h"
+
+#include "configsendx3c.h"
+#include "configsendx3e.h"
+#include "configsendx56.h"
+
+#include "configreceivex3d.h"
+#include "configreceivex4e.h"
+#include "configreceivex36.h"
+#include "configreceivex58.h"
+
+#include "readframe.h"
 
 /*****************************************************************************/
 /* Constructors and Destructor                                               */
 /*****************************************************************************/
 
 SeekThermal::AAA::Usb::Protocol::Protocol() {
-//   requests["GetFirmwareVersion"] = new GetFirmwareVersion();
+  requests["Initialize"] = new Initialize();
+  requests["Deinitialize"] = new Deinitialize();
+  
+  requests["ConfigSendx3C"] = new ConfigSendx3C();
+  requests["ConfigSendx3E"] = new ConfigSendx3E();
+  requests["ConfigSendx56"] = new ConfigSendx56();
+  
+  requests["ConfigReceivex3D"] = new ConfigReceivex3D();
+  requests["ConfigReceivex4E"] = new ConfigReceivex4E();
+  requests["ConfigReceivex36"] = new ConfigReceivex36();
+  requests["ConfigReceivex58"] = new ConfigReceivex58();
+  
+  requests["ReadFrame"] = new ReadFrame();
 }
 
 SeekThermal::AAA::Usb::Protocol::Protocol(const Protocol& src) :

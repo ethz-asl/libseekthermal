@@ -18,38 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#ifndef SEEKTHERMAL_AAA_USB_CONFIG_SEND_H
+#define SEEKTHERMAL_AAA_USB_CONFIG_SEND_H
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
+/** \brief Seek XX-AAA Thermal camera config send request (USB protocol)
+  * 
+  * This is the common base class of all config send requests whose meaning
+  * is currently undocumented.
   */
 
-#include <seekthermal/usb/protocol.h>
+#include <seekthermal/usb/request.h>
 
 namespace SeekThermal {
   namespace AAA {
-    class Device;
-    
     namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
+      class ConfigSend :
+        public SeekThermal::Usb::Request {
       public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
+        /** \brief Construct a Seek XX-AAA Thermal camera config send request
           */
-        Protocol();
-        Protocol(const Protocol& src);
-
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
+        ConfigSend(unsigned char request, unsigned short value,
+          unsigned short index, size_t outputDataSize = 0);
+        
+        void read(std::istream& stream);
       };
     };
   };

@@ -18,38 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#ifndef SEEKTHERMAL_AAA_USB_CONFIG_RECEIVE_X36_H
+#define SEEKTHERMAL_AAA_USB_CONFIG_RECEIVE_X36_H
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
+/** \brief Seek XX-AAA Thermal camera config receive request "0x36"
+  *   (USB protocol)
+  * 
+  * \note The meaning of this request must be clarified some day.
   */
 
-#include <seekthermal/usb/protocol.h>
+#include <seekthermal/models/aaa/usb/configreceive.h>
 
 namespace SeekThermal {
   namespace AAA {
-    class Device;
-    
     namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
+      class ConfigReceivex36 :
+        public ConfigReceive {
       public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
+        /** \brief Construct a Seek XX-AAA Thermal camera config receive
+          *   request "0x36"
           */
-        Protocol();
-        Protocol(const Protocol& src);
+        ConfigReceivex36();
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
+        ConfigReceivex36* clone() const;
       };
     };
   };

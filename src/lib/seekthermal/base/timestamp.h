@@ -18,40 +18,37 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#ifndef SEEKTHERMAL_TIMESTAMP_H
+#define SEEKTHERMAL_TIMESTAMP_H
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
+/** \brief Seek Thermal timestamp
   */
 
-#include <seekthermal/usb/protocol.h>
+#include <cstdint>
 
 namespace SeekThermal {
-  namespace AAA {
-    class Device;
+  class Timestamp {
+  public:
+    /** \brief Construct a Seek Thermal object
+      */
+    Timestamp(int64_t nsSinceTheEpoch = -1);
+    Timestamp(const Timestamp& src);
     
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
-
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
+    /** \brief Access the timestamp as [ns] since the epoch
+      */
+    inline int64_t getNsSinceTheEpoch() const {
+      return nsSinceTheEpoch;
     };
+    
+    /** \brief Seek Thermal timestamp assignments
+      */
+    Timestamp& operator=(const Timestamp& src);
+    
+    /** \brief Generate a timestamp as of now
+      */
+    static Timestamp now();
+  protected:
+    int64_t nsSinceTheEpoch;
   };
 };
 

@@ -1,3 +1,9 @@
+libseekthermal (0.1-2) unstable; urgency=low
+
+  * Revised code, tested for Seek UW-AAA thermal imaging device
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 06 Mar 2015 15:03:00 +0100
+ 
 libseekthermal (0.1-1) unstable; urgency=low
 
   * Initial commit

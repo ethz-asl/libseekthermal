@@ -1,4 +1,4 @@
-remake_project_header(config.h.remake)
+remake_project_header(config.h.remake INSTALL)
 
 remake_add_directories()
 

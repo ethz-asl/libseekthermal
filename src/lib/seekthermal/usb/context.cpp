@@ -37,7 +37,7 @@
 /*****************************************************************************/
 
 SeekThermal::Prototype<SeekThermal::Context>
-  SeekThermal::Usb::Context::prototype(new SeekThermal::Usb::Context(), "Usb");
+  SeekThermal::Usb::Context::prototype(new SeekThermal::Usb::Context(), "USB");
 
 /*****************************************************************************/
 /* Constructors and Destructor                                               */

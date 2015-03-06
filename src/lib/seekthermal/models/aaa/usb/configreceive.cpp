@@ -18,41 +18,30 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include "configreceive.h"
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-#include <seekthermal/usb/protocol.h>
+SeekThermal::AAA::Usb::ConfigReceive::ConfigReceive(unsigned char request,
+    unsigned short value,  unsigned short index, size_t inputDataSize) :
+  SeekThermal::Usb::Request(typeVendor, recipientInterface, directionIn,
+    request, value, index) {
+  data.resize(inputDataSize);
+}
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
+
+void SeekThermal::AAA::Usb::ConfigReceive::write(std::ostream& stream) const {
+  for (size_t i = 0; i < data.size(); ++i) {
+    if (i)
+      stream << " ";
     
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
-
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
-
-#endif
+    char hex[16];
+    sprintf(hex, "0x%02x", data[i]);
+    stream << hex;
+  }
+}

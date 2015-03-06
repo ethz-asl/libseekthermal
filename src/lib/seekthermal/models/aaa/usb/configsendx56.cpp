@@ -18,41 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include "configsendx56.h"
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-#include <seekthermal/usb/protocol.h>
+SeekThermal::AAA::Usb::ConfigSendx56::ConfigSendx56(unsigned char b1,
+    unsigned char b2, unsigned char b3, unsigned char b4, unsigned char b5,
+    unsigned char b6) :
+  ConfigSend(0x56, 0, 0, 6) {
+  data[0] = b1;
+  data[1] = b2;
+  data[2] = b3;
+  data[3] = b4;
+  data[4] = b5;
+  data[5] = b6;
+}
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
-    
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
-
-#endif
+SeekThermal::AAA::Usb::ConfigSendx56*
+    SeekThermal::AAA::Usb::ConfigSendx56::clone() const {
+  return new ConfigSendx56(*this);
+}

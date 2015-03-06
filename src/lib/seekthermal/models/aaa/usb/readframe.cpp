@@ -18,41 +18,46 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include "readframe.h"
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-#include <seekthermal/usb/protocol.h>
+SeekThermal::AAA::Usb::ReadFrame::ReadFrame(size_t size) :
+  SeekThermal::Usb::Request(typeVendor, recipientInterface, directionOut,
+    0x53, 0, 0) {
+  data.resize(4);
+  setSize(size);
+}
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
-    
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
+/*****************************************************************************/
+/* Accessors                                                                 */
+/*****************************************************************************/
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
+void SeekThermal::AAA::Usb::ReadFrame::setSize(size_t size) {
+  data[0] = size;
+  data[1] = size >> 8;
+}
 
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
+size_t SeekThermal::AAA::Usb::ReadFrame::getSize() const {
+  size_t size = data[1];
+  size <<= 8;
+  size += data[0];
+}
 
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
 
-#endif
+SeekThermal::AAA::Usb::ReadFrame*
+    SeekThermal::AAA::Usb::ReadFrame::clone() const {
+  return new ReadFrame(*this);
+}
+        
+void SeekThermal::AAA::Usb::ReadFrame::read(std::istream& stream) {
+  size_t size;
+  stream >> size;
+  
+  setSize(size);
+}

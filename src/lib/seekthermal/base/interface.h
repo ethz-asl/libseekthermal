@@ -90,6 +90,10 @@ namespace SeekThermal {
       */
     virtual void transfer(Request& request) = 0;
 
+    /** \brief Read data from the interface
+      */
+    virtual void read(std::vector<unsigned char>& data) = 0;
+    
     /** \brief Seek Thermal interface queries
       */
     virtual bool isOpen() const = 0;

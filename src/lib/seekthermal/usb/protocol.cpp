@@ -39,7 +39,7 @@ SeekThermal::Usb::Protocol::~Protocol() {
 /*****************************************************************************/
 
 std::string SeekThermal::Usb::Protocol::getName() const {
-  return "SeekThermal Native USB Protocol";
+  return "Seek Thermal Native USB Protocol";
 }
 
 /*****************************************************************************/

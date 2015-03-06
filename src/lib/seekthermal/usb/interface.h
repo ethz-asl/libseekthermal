@@ -102,6 +102,7 @@ namespace SeekThermal {
       void open();
       void close();
       void transfer(Request& request);
+      void read(std::vector<unsigned char>& data);
 
       Pointer<Device> discoverDevice() const;
 

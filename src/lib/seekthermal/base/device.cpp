@@ -118,9 +118,23 @@ void SeekThermal::Device::connect() {
     throw InterfaceError();
 }
 
+void SeekThermal::Device::initialize() {
+  if (!isConnected())
+    throw ConnectionError();
+  
+  doInitialize();
+}
+
 void SeekThermal::Device::disconnect() {
   if (!interface.isNull())
     interface->close();
+}
+
+void SeekThermal::Device::capture(Frame& frame) {
+  if (!isConnected())
+    throw ConnectionError();
+  
+  doCapture(frame);
 }
 
 void SeekThermal::Device::send(Request& request) {

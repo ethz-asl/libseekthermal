@@ -18,41 +18,22 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include "configreceivex58.h"
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-#include <seekthermal/usb/protocol.h>
+SeekThermal::AAA::Usb::ConfigReceivex58::ConfigReceivex58(size_t
+    inputDataSize) :
+  ConfigReceive(0x58, 0, 0, inputDataSize) {
+}
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
-    
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
-
-#endif
+SeekThermal::AAA::Usb::ConfigReceivex58*
+    SeekThermal::AAA::Usb::ConfigReceivex58::clone() const {
+  return new ConfigReceivex58(*this);
+}

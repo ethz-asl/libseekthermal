@@ -4,7 +4,7 @@ include(ReMake)
 
 remake_project(
   libseekthermal
-  VERSION 0.2
+  VERSION 0.1
   RELEASE beta
   SUMMARY "Driver library for the Seek Thermal imaging device."
   AUTHOR "Ralf Kaestner"
@@ -31,12 +31,17 @@ remake_doc(
 )
 
 remake_pack_deb(
-  DEPENDS libudev1 libusb-1.0-0
+  DEPENDS libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
 )
 remake_pack_deb(
   COMPONENT utils
   DESCRIPTION "utilities"
-  DEPENDS libseekthermal
+  DEPENDS libseekthermal libpng12-0
+)
+remake_pack_deb(
+  COMPONENT gui
+  DESCRIPTION "GUI"
+  DEPENDS libseekthermal libqtgui4
 )
 remake_pack_deb(
   COMPONENT dev
@@ -55,30 +60,19 @@ remake_pack_deb(
   DESCRIPTION "documentation"
 )
 
-# remake_distribute_deb(
-#   DISTRIBUTION lucid
-#   SECTION libs
-#   UPLOAD ppa:ethz-asl/common
-#   DEPENDS libboost-system-dev libboost-thread-dev libboost-signals-dev
-#     libboost-chrono-dev libboost-program-options-dev remake doxygen
-#     pkg-config
-#   PASS CMAKE_BUILD_TYPE LIBOPTOFORCE_GIT_REVISION
-# )
-# remake_distribute_deb(
-#   DISTRIBUTION precise
-#   SECTION libs
-#   UPLOAD ppa:ethz-asl/common
-#   DEPENDS libboost-system-dev libboost-thread-dev libboost-signals-dev
-#     libboost-chrono-dev libboost-program-options-dev remake doxygen
-#     pkg-config
-#   PASS CMAKE_BUILD_TYPE LIBOPTOFORCE_GIT_REVISION
-# )
-# remake_distribute_deb(
-#   DISTRIBUTION trusty
-#   SECTION libs
-#   UPLOAD ppa:ethz-asl/common
-#   DEPENDS libboost-system-dev libboost-thread-dev libboost-signals-dev
-#     libboost-chrono-dev libboost-program-options-dev remake doxygen
-#     pkg-config
-#   PASS CMAKE_BUILD_TYPE LIBOPTOFORCE_GIT_REVISION
-# )
+remake_distribute_deb(
+  DISTRIBUTION precise
+  SECTION libs
+  UPLOAD ppa:kralf/asl
+  DEPENDS libboost-chrono1.48-dev libudev-dev libusb-1.0-0-dev
+    libpng12-dev libqt4-dev remake doxygen pkg-config
+  PASS CMAKE_BUILD_TYPE LIBSEEKTHERMAL_GIT_REVISION
+)
+remake_distribute_deb(
+  DISTRIBUTION trusty
+  SECTION libs
+  UPLOAD ppa:kralf/asl
+  DEPENDS libboost-chrono-dev libudev-dev libusb-1.0-0-dev
+    libpng12-dev libqt4-dev remake doxygen pkg-config
+  PASS CMAKE_BUILD_TYPE LIBSEEKTHERMAL_GIT_REVISION
+)

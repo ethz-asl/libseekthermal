@@ -18,38 +18,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#ifndef SEEKTHERMAL_AAA_USB_READ_FRAME_H
+#define SEEKTHERMAL_AAA_USB_READ_FRAME_H
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
+/** \brief Seek XX-AAA Thermal camera read frame request (USB protocol)
   */
 
-#include <seekthermal/usb/protocol.h>
+#include <seekthermal/usb/request.h>
 
 namespace SeekThermal {
   namespace AAA {
-    class Device;
-    
     namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
+      class ReadFrame :
+        public SeekThermal::Usb::Request {
       public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
+        /** \brief Construct a Seek XX-AAA Thermal camera read frame
+          *   request
           */
-        Protocol();
-        Protocol(const Protocol& src);
+        ReadFrame(size_t size = 0);
+        
+        /** Access the read frame request's size
+          */
+        void setSize(size_t size);
+        size_t getSize() const;
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
+        ReadFrame* clone() const;
+        
+        void read(std::istream& stream);
       };
     };
   };

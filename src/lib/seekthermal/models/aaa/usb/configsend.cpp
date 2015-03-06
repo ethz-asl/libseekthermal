@@ -18,41 +18,28 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include "configsend.h"
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-#include <seekthermal/usb/protocol.h>
+SeekThermal::AAA::Usb::ConfigSend::ConfigSend(unsigned char request,
+    unsigned short value, unsigned short index, size_t outputDataSize) :
+  SeekThermal::Usb::Request(typeVendor, recipientInterface, directionOut,
+    request, value, index) {
+  data.resize(outputDataSize);
+}
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
-    
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
-
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
-
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
-
-#endif
+void SeekThermal::AAA::Usb::ConfigSend::read(std::istream& stream) {
+  unsigned int byte;
+ 
+  for (size_t i = 0; i < data.size(); ++i) {
+    stream >> byte;
+    data[i] = byte;
+  }
+}

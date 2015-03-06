@@ -213,6 +213,24 @@ void SeekThermal::Usb::Interface::transfer(Request& request) {
     throw OperationError();
 }
 
+void SeekThermal::Usb::Interface::read(std::vector<unsigned char>& data) {
+  if (handle) {
+    Error::assert(libusb_claim_interface(handle, 0));
+
+    size_t numRead = 0;
+    while (numRead < data.size()) {
+      int transferred = 0;
+      Error::assert(libusb_bulk_transfer(handle, 0x81, &data[numRead],
+        data.size()-numRead, &transferred, timeout*1e3));      
+      numRead += transferred;
+    }
+    
+    Error::assert(libusb_release_interface(handle, 0));
+  }
+  else
+    throw OperationError();
+}
+
 void SeekThermal::Usb::Interface::transfer(SeekThermal::Request& request) {
   Request* usbRequest = dynamic_cast<Request*>(&request);
 

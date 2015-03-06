@@ -1,1 +1,8 @@
-remake_add_executables(LINK seekthermal)
+remake_add_directories(
+ utils
+ COMPONENT utils
+)
+remake_add_directories(
+ gui
+ COMPONENT gui
+)

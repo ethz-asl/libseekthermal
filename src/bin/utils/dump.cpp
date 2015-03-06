@@ -19,41 +19,38 @@
  ***************************************************************************/
 
 #include <iostream>
+#include <csignal>
 
 #include <seekthermal/seekthermal.h>
 
 #include <seekthermal/command/application.h>
 
+#include <seekthermal/usb/context.h>
+
 using namespace SeekThermal;
+
+bool interrupt = false;
+
+void signaled(int signal) {
+  interrupt = true;
+}
 
 int main(int argc, char **argv) {
   Command::Application application(
-    "Send protocol request to Seek Thermal camera device");
+    "Dump frames from a Seek Thermal camera device into files");
   application[0] = Command::Argument(
     "Interface address of connected device", "ADDRESS");
   application[1] = Command::Argument(
-    "Identifier of request to be sent", "REQUEST", "GetFirmwareVersion");
-  application[2] = Command::Argument(
-    "Arguments of request or '-' (stdin)", "ARG", "-");
-  application[2].setGreedy(true);
-  application["context"] = Command::Argument(
-    "Communication context", "CONTEXT", "Usb");
+    "Filename format string or '-' (stdout)", "FILE", "-");
   application["device"] = Command::Argument(
     "Type of connected device", "TYPE");
-  application["protocol"] = Command::Argument(
-    "Communication protocol", "PROTOCOL", "Usb");
   application["timeout"] = Command::Argument(
-    "Request timeout in ms", "TIMEOUT", "10");
-  application["list-protocols"] = Command::Argument(
-    "List protocols and exit", "", false);
-  application["list-requests"] = Command::Argument(
-    "List protocol requests and exit", "", false);
+    "Request timeout in ms", "TIMEOUT", "1000");
 
   if (application.parseArguments(argc, argv)) {
-    Pointer<Context> context =
-      createContext(application["context"].getValue());
+    SeekThermal::Usb::Context context;
     Pointer<Interface> interface =
-      context->getInterface(application[0].getValue());
+      context.getInterface(application[0].getValue());
 
     Pointer<Device> device;
     if (application["device"].getValue().empty())
@@ -62,46 +59,40 @@ int main(int argc, char **argv) {
       device = createDevice(application["device"].getValue());
 
     if (!device.isNull()) {
-      if (application["list-protocols"].getValue<bool>()) {
-        std::cout << device->getProtocols() << std::endl;
-        return 0;
-      }
-
-      const Protocol& protocol = device->getProtocol(
-        application["protocol"].getValue());
-
-      if (application["list-requests"].getValue<bool>()) {
-        std::cout << protocol << std::endl;
-        return 0;
-      }
-
       interface->setTimeout(
         application["timeout"].getValue<size_t>()*1e-3);
       device->setInterface(interface);
       device->connect();
-
-      Pointer<Request> request = protocol.createRequest(
-        application[1].getValue());
-      if (application[2].getValue() != "-") {
-        std::istringstream stream(application[2].getValue());
-        stream >> *request;
+      
+      device->initialize();
+      
+      signal(SIGINT, signaled);
+      
+      size_t frameId = 0;
+      while (!interrupt) {
+        Frame frame;
+        
+        device->capture(frame);
+        
+        if (application[1].getValue() != "-") {
+          char filename[1024];
+          sprintf(filename, application[1].getValue().c_str(), frameId);
+          frame.save(filename);
+          
+          std::cout << "." << std::flush;
+        }
+        else
+          frame.save(std::cout);
+        
+        ++frameId;
       }
-      else
-        std::cin >> *request;
-      device->send(*request);
-
-      std::ostringstream stream;
-      stream << *request;
-
-      if (!stream.str().empty())
-        std::cout << "Response: " << stream.str() << std::endl;
-      else
-        std::cout << "No response." << std::endl;
-
+      if (application[1].getValue() != "-")
+        std::cout << std::endl;
+      
       device->disconnect();
     }
     else {
-      std::cout << "No such device." << std::endl;
+      std::cerr << "No such device." << std::endl;
       return -1;
     }
   }

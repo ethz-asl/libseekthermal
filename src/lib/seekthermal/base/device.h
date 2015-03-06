@@ -32,6 +32,7 @@
 #include <seekthermal/base/pointer.h>
 #include <seekthermal/base/interface.h>
 #include <seekthermal/base/protocol.h>
+#include <seekthermal/base/frame.h>
 
 namespace SeekThermal {
   class Device :
@@ -123,9 +124,16 @@ namespace SeekThermal {
     /** \brief Connect the Seek Thermal device
       */
     void connect();
-    /**\brief  Disconnect the Seek Thermal device
+    /** \brief Initialize the Seek Thermal device
+      */
+    void initialize();
+    /** \brief Disconnect the Seek Thermal device
       */
     void disconnect();
+
+    /** \brief Capture frame from the Seek Thermal device
+      */
+    void capture(Frame& frame);
 
     /** \brief Send the specified request to the Seek Thermal device
       */
@@ -147,6 +155,14 @@ namespace SeekThermal {
     /** \brief Construct a Seek Thermal device
       */
     Device(size_t vendorId = 0, size_t productId = 0);
+    
+    /** \brief Perform Seek Thermal device initialization
+      */
+    virtual void doInitialize() = 0;
+    
+    /** \brief Perform Seek Thermal device frame capturing
+      */
+    virtual void doCapture(Frame& frame) = 0;
   };
 };
 

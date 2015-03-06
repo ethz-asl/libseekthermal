@@ -54,7 +54,7 @@ namespace SeekThermal {
         std::string operator[](Type productId) const;
         using std::map<Type, std::string>::operator[];
       };
-
+      
       class Prototypes :
         public std::list<Prototype<SeekThermal::Device> > {
       public:
@@ -104,6 +104,14 @@ namespace SeekThermal {
       /** \brief Clone the Seek XX-AAA Thermal camera device
         */
       Device* clone() const;
+    protected:  
+      /** \brief Perform Seek XX-AAA Thermal camera device initialization
+        */
+      void doInitialize();
+      
+      /** \brief Perform Seek XX-AAA Thermal camera device frame capturing
+        */
+      void doCapture(Frame& frame);
     private:
       static Prototypes prototypes;
     };

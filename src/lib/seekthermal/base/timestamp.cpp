@@ -18,41 +18,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef SEEKTHERMAL_AAA_USB_PROTOCOL_H
-#define SEEKTHERMAL_AAA_USB_PROTOCOL_H
+#include <boost/chrono.hpp>
 
-/** \brief USB protocol for the Seek XX-AAA Thermal camera device
-  */
+#include "timestamp.h"
 
-#include <seekthermal/usb/protocol.h>
+/*****************************************************************************/
+/* Constructors and Destructor                                               */
+/*****************************************************************************/
 
-namespace SeekThermal {
-  namespace AAA {
-    class Device;
-    
-    namespace Usb {
-      class Protocol :
-        public SeekThermal::Usb::Protocol {
-      public:
-        /** \brief Construct a Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol();
-        Protocol(const Protocol& src);
+SeekThermal::Timestamp::Timestamp(int64_t nsSinceTheEpoch) :
+  nsSinceTheEpoch(nsSinceTheEpoch) {
+}
 
-        /** \brief Destroy a Seek XX-AAA Thermal camera USB protocol
-          */
-        virtual ~Protocol();
+SeekThermal::Timestamp::Timestamp(const Timestamp& src) :
+  nsSinceTheEpoch(src.nsSinceTheEpoch) {
+}
 
-        /** \brief Seek XX-AAA Thermal camera USB protocol assignments
-          */
-        Protocol& operator=(const Protocol& src);
+/*****************************************************************************/
+/* Methods                                                                   */
+/*****************************************************************************/
 
-        /** \brief Clone the Seek XX-AAA Thermal camera USB protocol
-          */
-        Protocol* clone() const;
-      };
-    };
-  };
-};
+SeekThermal::Timestamp& SeekThermal::Timestamp::operator=(const Timestamp&
+    src) {
+  nsSinceTheEpoch = src.nsSinceTheEpoch;
+  return *this;
+}
 
-#endif
+SeekThermal::Timestamp SeekThermal::Timestamp::now() {
+  boost::chrono::high_resolution_clock::time_point now =
+    boost::chrono::high_resolution_clock::now();
+  return boost::chrono::duration_cast<boost::chrono::nanoseconds>(
+    now.time_since_epoch()).count();
+}

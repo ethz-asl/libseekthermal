@@ -18,8 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef SEEKTHERMAL_CONFIG_H
+#define SEEKTHERMAL_CONFIG_H
 
 #define PROJECT_NAME "${REMAKE_PROJECT_NAME}"
 #define PROJECT_MAJOR ${REMAKE_PROJECT_MAJOR}

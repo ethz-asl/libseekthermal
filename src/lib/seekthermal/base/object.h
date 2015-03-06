@@ -59,7 +59,7 @@ namespace SeekThermal {
     bool inStack() const;
     template <class C> bool isA() const;
   private:
-    size_t numReferences;
+    mutable size_t numReferences;
   };
 };
 
