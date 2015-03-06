@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Driver library for the Seek Thermal imaging device.
+Driver library for the Seek Thermal imaging devices.
 
 **Author(s):** Ralf Kaestner
 

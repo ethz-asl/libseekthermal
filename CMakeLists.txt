@@ -6,7 +6,7 @@ remake_project(
   libseekthermal
   VERSION 0.1
   RELEASE beta
-  SUMMARY "Driver library for the Seek Thermal imaging device."
+  SUMMARY "Driver library for Seek Thermal imaging devices."
   AUTHOR "Ralf Kaestner"
   CONTACT "ralf.kaestner@gmail.com"
   HOME "http://github.com/ethz-asl/libseekthermal"
