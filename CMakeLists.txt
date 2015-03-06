@@ -31,7 +31,7 @@ remake_doc(
 )
 
 remake_pack_deb(
-  DEPENDS libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
+  DEPENDS libudev0|libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
 )
 remake_pack_deb(
   COMPONENT utils
