@@ -40,7 +40,7 @@ template <typename T, typename U, typename V>
 /*****************************************************************************/
 
 template <typename T, typename U, typename V>
-    void SeekThermal::Request::ParameterRangeError::assert(const T& value,
+    void SeekThermal::Request::ParameterRangeError::assertValue(const T& value,
     const U& minValue, const V& maxValue) {
   if ((value < minValue) || (value > maxValue))
     throw ParameterRangeError(value, minValue, maxValue);

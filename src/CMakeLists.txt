@@ -16,4 +16,3 @@ remake_include(
 )
 
 remake_add_directories(lib bin)
-remake_pkg_config_generate()

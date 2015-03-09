@@ -1,3 +1,11 @@
+libseekthermal (0.1-6) unstable; urgency=low
+
+  * Fixed duplicate pkg_config_generate() call (leading to a malformed
+    pkg-config file)
+  * Renamed assert() methods to avoid conflicts by assert macro inclusions
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 09 Mar 2015 09:25:00 +0100
+ 
 libseekthermal (0.1-5) unstable; urgency=low
 
   * Fixed includes in seekthermal.h

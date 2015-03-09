@@ -96,7 +96,7 @@ namespace SeekThermal {
 
       /** \brief Seek Thermal USB error assertion
         */
-      static int assert(int error);
+      static int assertSuccess(int error);
     protected:
       Code code;
     };

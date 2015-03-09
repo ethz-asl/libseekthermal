@@ -114,7 +114,7 @@ bool SeekThermal::Usb::Error::operator!=(Code code) const {
   return (code != this->code);
 }
 
-int SeekThermal::Usb::Error::assert(int error) {
+int SeekThermal::Usb::Error::assertSuccess(int error) {
   if (error < LIBUSB_SUCCESS)
     throw Error(error);
   else

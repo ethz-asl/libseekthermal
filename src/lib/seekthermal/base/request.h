@@ -45,7 +45,7 @@ namespace SeekThermal {
 
       /** \brief Seek Thermal request parameter range error assertion
         */
-      template <typename T, typename U, typename V> static void assert(
+      template <typename T, typename U, typename V> static void assertValue(
         const T& value, const U& minValue, const V& maxValue);
     };
 

@@ -53,14 +53,14 @@ SeekThermal::Usb::Context::DebugLevels::DebugLevels() {
 SeekThermal::Usb::Context::Context(DebugLevel debugLevel) :
   debugLevel(debugLevel),
   context(0) {
-  Error::assert(libusb_init(&context));
+  Error::assertSuccess(libusb_init(&context));
   libusb_set_debug(context, this->debugLevel);
 }
 
 SeekThermal::Usb::Context::Context(const Context& src) :
   debugLevel(src.debugLevel),
   context(0) {
-  Error::assert(libusb_init(&context));
+  Error::assertSuccess(libusb_init(&context));
   libusb_set_debug(context, debugLevel);
 }
 

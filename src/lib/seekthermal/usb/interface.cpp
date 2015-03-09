@@ -53,7 +53,7 @@ SeekThermal::Usb::Interface::Interface(libusb_device* device) :
     libusb_ref_device(this->device);
 
     descriptor = new libusb_device_descriptor();
-    SeekThermal::Usb::Error::assert(
+    SeekThermal::Usb::Error::assertSuccess(
       libusb_get_device_descriptor(this->device, descriptor));
 
     std::ostringstream stream;
@@ -144,8 +144,8 @@ std::string SeekThermal::Usb::Interface::getDeviceSerialNumber() const {
     unsigned char data[256];
     size_t length;
 
-    length = Error::assert(libusb_get_string_descriptor_ascii(handle,
-      descriptor->iSerialNumber, data, sizeof(data)));
+    length = Error::assertSuccess(libusb_get_string_descriptor_ascii(
+      handle, descriptor->iSerialNumber, data, sizeof(data)));
 
     return std::string(reinterpret_cast<char*>(data), length);
   }
@@ -190,9 +190,9 @@ SeekThermal::Usb::Interface& SeekThermal::Usb::Interface::operator=(const
 
 void SeekThermal::Usb::Interface::open() {
   if (!handle) {
-    Error::assert(libusb_open(device, &handle));
-    if (Error::assert(libusb_kernel_driver_active(handle, 0)))
-      Error::assert(libusb_detach_kernel_driver(handle, 0));
+    Error::assertSuccess(libusb_open(device, &handle));
+    if (Error::assertSuccess(libusb_kernel_driver_active(handle, 0)))
+      Error::assertSuccess(libusb_detach_kernel_driver(handle, 0));
   }
 }
 
@@ -205,9 +205,9 @@ void SeekThermal::Usb::Interface::close() {
 
 void SeekThermal::Usb::Interface::transfer(Request& request) {
   if (handle) {
-    Error::assert(libusb_claim_interface(handle, 0));
+    Error::assertSuccess(libusb_claim_interface(handle, 0));
     request.transfer(handle, request.data, timeout);
-    Error::assert(libusb_release_interface(handle, 0));
+    Error::assertSuccess(libusb_release_interface(handle, 0));
   }
   else
     throw OperationError();
@@ -215,17 +215,17 @@ void SeekThermal::Usb::Interface::transfer(Request& request) {
 
 void SeekThermal::Usb::Interface::read(std::vector<unsigned char>& data) {
   if (handle) {
-    Error::assert(libusb_claim_interface(handle, 0));
+    Error::assertSuccess(libusb_claim_interface(handle, 0));
 
     size_t numRead = 0;
     while (numRead < data.size()) {
       int transferred = 0;
-      Error::assert(libusb_bulk_transfer(handle, 0x81, &data[numRead],
+      Error::assertSuccess(libusb_bulk_transfer(handle, 0x81, &data[numRead],
         data.size()-numRead, &transferred, timeout*1e3));      
       numRead += transferred;
     }
     
-    Error::assert(libusb_release_interface(handle, 0));
+    Error::assertSuccess(libusb_release_interface(handle, 0));
   }
   else
     throw OperationError();
