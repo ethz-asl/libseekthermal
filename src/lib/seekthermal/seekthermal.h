@@ -26,9 +26,9 @@
 
 #include <list>
 
-#include "base/context.h"
-#include "base/interface.h"
-#include "base/device.h"
+#include <seekthermal/base/context.h>
+#include <seekthermal/base/interface.h>
+#include <seekthermal/base/device.h>
 
 namespace SeekThermal {
   /** Create a communication context of the specified type
