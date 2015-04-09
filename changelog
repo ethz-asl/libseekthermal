@@ -1,3 +1,8 @@
+libseekthermal (0.1-7) unstable; urgency=low
+    Removed Boost from drivers since the version used is not compatible with ros hydro or lower. Switched std chrono which is available on C++11 compilers
+
+ -- Gowtham Garimella <ggarime1@jhu.edu>  Tue Mar 31 19:39:37 2015 -0400
+
 libseekthermal (0.1-6) unstable; urgency=low
 
   * Fixed duplicate pkg_config_generate() call (leading to a malformed
