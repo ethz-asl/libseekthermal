@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <boost/chrono.hpp>
+#include <chrono>
 
 #include "timestamp.h"
 
@@ -45,8 +45,8 @@ SeekThermal::Timestamp& SeekThermal::Timestamp::operator=(const Timestamp&
 }
 
 SeekThermal::Timestamp SeekThermal::Timestamp::now() {
-  boost::chrono::high_resolution_clock::time_point now =
-    boost::chrono::high_resolution_clock::now();
-  return boost::chrono::duration_cast<boost::chrono::nanoseconds>(
+  std::chrono::high_resolution_clock::time_point now =
+    std::chrono::high_resolution_clock::now();
+  return std::chrono::duration_cast<std::chrono::nanoseconds>(
     now.time_since_epoch()).count();
 }
