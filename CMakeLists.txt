@@ -15,7 +15,7 @@ remake_project(
   PREFIX seekthermal-
   INSTALL /usr
   HEADER_DESTINATION include/seekthermal
-  EXTRA_CXX_FLAGS -std=c++0x
+  EXTRA_CXX_FLAGS -std=c++11
 )
 
 remake_component(
@@ -31,7 +31,7 @@ remake_doc(
 )
 
 remake_pack_deb(
-  DEPENDS libudev0|libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
+  DEPENDS libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
 )
 remake_pack_deb(
   COMPONENT utils
