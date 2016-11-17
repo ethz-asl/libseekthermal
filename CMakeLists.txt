@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
+SET(CMAKE_CXX_FLAGS "-std=c++11" CACHE STRING "" FORCE)
 
 include(ReMake)
 
@@ -15,7 +16,6 @@ remake_project(
   PREFIX seekthermal-
   INSTALL /usr
   HEADER_DESTINATION include/seekthermal
-  EXTRA_CXX_FLAGS -std=c++11
 )
 
 remake_component(
