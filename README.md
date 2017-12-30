@@ -68,7 +68,7 @@ package repositories of recent Ubuntu releases. To install them, simply
 use the command
 
 ```
-sudo apt-get install doxygen pkg-config
+sudo apt-get install doxygen pkg-config cmake libboost-dev libboost-chrono-dev libusb-1.0-0-dev libudev-dev libqt4-dev
 ```
 
 #### Building with CMake

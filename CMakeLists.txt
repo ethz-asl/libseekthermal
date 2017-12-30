@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
+SET(CMAKE_CXX_FLAGS "-std=c++11" CACHE STRING "" FORCE)
 
 include(ReMake)
 
@@ -15,7 +16,6 @@ remake_project(
   PREFIX seekthermal-
   INSTALL /usr
   HEADER_DESTINATION include/seekthermal
-  EXTRA_CXX_FLAGS -std=c++0x
 )
 
 remake_component(
@@ -31,7 +31,7 @@ remake_doc(
 )
 
 remake_pack_deb(
-  DEPENDS libudev0|libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
+  DEPENDS libudev1 libusb-1.0-0 libboost-chrono[0-9.]*
 )
 remake_pack_deb(
   COMPONENT utils
